@@ -21,11 +21,21 @@ window.addEventListener('load', () => {
                 return res.json();
             })
             .then(data => {
-                const {temperature, summary} = data.currently;
+                const {temperature, summary, icon} = data.currently;
+                const timezone = data.timezone;
                 temperatureExtraInfo.textContent = summary;
                 temperatureDegrees.textContent = temperature;
+                locationTimezone.textContent = timezone;
 
-            })
+                setIcons(icon, document.querySelector('.icon'));
+
+            });
         });
+    }
+    function setIcons(icon, iconID) {
+        const skycons = new Skycons({color: "white"});
+        const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+        skycons.play();
+        return skycons.set(iconID, Skycons[currentIcon]);
     }
 });
